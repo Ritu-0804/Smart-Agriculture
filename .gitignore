@@ -1,0 +1,9 @@
+node_modules
+__pycache__
+.env
+dist
+
+# Ignore local model artifacts and datasets
+backend/disease_model/dataset/
+backend/disease_model/disease_model.h5
+backend/ml/crop_model.pkl
