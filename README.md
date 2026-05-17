@@ -149,7 +149,7 @@ python app.py
 Backend will run on:
 
 ```bash
-http://127.0.0.1:5000
+https://smart-agriculture-8u1g.onrender.com/
 ```
 
 ---
