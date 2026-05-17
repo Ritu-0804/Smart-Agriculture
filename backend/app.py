@@ -6,7 +6,7 @@ from routes.soil_routes import soil_bp
 from routes.crop_routes import crop_bp
 from routes.weather_routes import weather_bp
 from routes.fertilizer_routes import fertilizer_bp
-from routes.disease_routes import disease_bp
+# from routes.disease_routes import disease_bp
 
 app = Flask(__name__)
 
@@ -18,7 +18,7 @@ app.register_blueprint(soil_bp)
 app.register_blueprint(crop_bp)
 app.register_blueprint(weather_bp)
 app.register_blueprint(fertilizer_bp)
-app.register_blueprint(disease_bp)
+# app.register_blueprint(disease_bp)
 
 # Home Route
 @app.route("/")
