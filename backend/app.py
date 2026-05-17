@@ -1,6 +1,5 @@
 from flask import Flask
 from flask_cors import CORS
-import os
 
 # Routes
 from routes.soil_routes import soil_bp
@@ -14,7 +13,7 @@ app = Flask(__name__)
 # Enable CORS
 CORS(app)
 
-# Register Routes
+# Register Blueprints
 app.register_blueprint(soil_bp)
 app.register_blueprint(crop_bp)
 app.register_blueprint(weather_bp)
@@ -28,8 +27,10 @@ def home():
         "message": "Smart Agriculture Assistant Backend Running 🚀"
     }
 
-# Render Deployment Fix
+# Run App
 if __name__ == "__main__":
+
+    import os
 
     port = int(os.environ.get("PORT", 5000))
 

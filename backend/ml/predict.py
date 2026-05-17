@@ -1,26 +1,23 @@
+import os
 import joblib
 import numpy as np
 
-import os
-import joblib
-
+# Get absolute path
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
+# Model path
 model_path = os.path.join(BASE_DIR, "crop_model.pkl")
 
+# Load model
 model = joblib.load(model_path)
 
-def recommend_crop(features):
+# Crop Recommendation Function
+def recommend_crop(N, P, K, temperature, humidity, ph, rainfall):
 
-    data = np.array([features])
+    features = np.array([
+        [N, P, K, temperature, humidity, ph, rainfall]
+    ])
 
-    prediction = model.predict(data)[0]
+    prediction = model.predict(features)
 
-    probability = model.predict_proba(data)
-
-    confidence = round(
-        np.max(probability) * 100,
-        2
-    )
-
-    return prediction, confidence
+    return prediction[0]
