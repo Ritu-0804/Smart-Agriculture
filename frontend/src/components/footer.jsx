@@ -1,20 +1,66 @@
+import { Link } from "react-router-dom";
+import { FaLeaf, FaGithub } from "react-icons/fa";
+
 function Footer() {
-
   return (
-    <footer className="bg-black/30 backdrop-blur-lg text-center px-4 py-6 mt-20 border-t border-white/10">
+    <footer style={{
+      borderTop: "1px solid rgba(255,255,255,0.06)",
+      background: "rgba(2,13,5,0.95)",
+      padding: "2rem 2rem",
+      fontFamily: "'DM Sans', sans-serif",
+    }}>
+      <div style={{
+        maxWidth: 1200,
+        margin: "0 auto",
+        display: "flex",
+        flexWrap: "wrap",
+        alignItems: "center",
+        justifyContent: "space-between",
+        gap: "1rem",
+      }}>
+        {/* Brand */}
+        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+          <div style={{
+            width: 32, height: 32,
+            background: "linear-gradient(135deg, #16a34a, #4ade80)",
+            borderRadius: 9, display: "flex", alignItems: "center",
+            justifyContent: "center", color: "white", fontSize: "0.85rem",
+          }}>
+            <FaLeaf />
+          </div>
+          <span style={{
+            fontFamily: "'Playfair Display', serif",
+            color: "#4ade80", fontWeight: 700, fontSize: "0.95rem",
+          }}>
+            Smart Agriculture
+          </span>
+        </div>
 
-      <h2 className="text-xl md:text-2xl font-bold text-green-300">
-        Smart Agriculture Assistant
-      </h2>
+        {/* Links */}
+        <div style={{ display: "flex", gap: "1.5rem" }}>
+          {[
+            { to: "/soil", label: "Soil" },
+            { to: "/crop", label: "Crops" },
+            { to: "/weather", label: "Weather" },
+            { to: "/fertilizer", label: "Fertilizer" },
+          ].map(({ to, label }) => (
+            <Link key={to} to={to} style={{
+              color: "rgba(255,255,255,0.35)", fontSize: "0.8rem",
+              textDecoration: "none", transition: "color 0.2s",
+            }}
+              onMouseEnter={e => e.target.style.color = "#4ade80"}
+              onMouseLeave={e => e.target.style.color = "rgba(255,255,255,0.35)"}
+            >
+              {label}
+            </Link>
+          ))}
+        </div>
 
-      <p className="text-gray-400 mt-2 text-sm md:text-base">
-        AI Powered Farming Solution 🌱
-      </p>
-
-      <p className="text-gray-500 text-xs md:text-sm mt-3">
-        © 2026 Smart Agriculture Assistant. All Rights Reserved.
-      </p>
-
+        {/* Copyright */}
+        <p style={{ color: "rgba(255,255,255,0.2)", fontSize: "0.75rem", margin: 0 }}>
+          © {new Date().getFullYear()} Smart Agriculture AI
+        </p>
+      </div>
     </footer>
   );
 }
