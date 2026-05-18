@@ -27,18 +27,69 @@ function DiseaseDetection() {
 
   const handleUpload = async () => {
     if (!image) return;
-    const formData = new FormData();
-    formData.append("image", image);
+
     try {
       setLoading(true);
-      const response = await API.post("/predict-disease", formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
-      setResult(response.data);
+
+      const reader = new FileReader();
+
+      reader.readAsDataURL(image);
+
+      reader.onload = async () => {
+
+        const base64Image = reader.result;
+
+        const response = await fetch(
+          "https://soumyaaa048-plant-disease-detector.hf.space/call/predict",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              data: [base64Image],
+            }),
+          }
+        );
+
+        const eventId = await response.json();
+
+        const resultResponse = await fetch(
+          `https://soumyaaa048-plant-disease-detector.hf.space/call/predict/${eventId.event_id}`
+        );
+
+        const resultText = await resultResponse.text();
+
+        const lines = resultText.split("\n");
+
+        const jsonLine = lines.find(line => line.startsWith("data:"));
+
+        const parsed = JSON.parse(jsonLine.replace("data:", "").trim());
+
+        const predictionText = parsed[0];
+
+        const match = predictionText.match(
+          /(.*)\s\(([\d.]+)% confidence\)/
+        );
+
+        if (match) {
+          setResult({
+            disease: match[1],
+            confidence: parseFloat(match[2]).toFixed(2),
+          });
+        } else {
+          setResult({
+            disease: predictionText,
+            confidence: "N/A",
+          });
+        }
+
+        setLoading(false);
+      };
+
     } catch (error) {
       console.log(error);
       alert("Prediction failed");
-    } finally {
       setLoading(false);
     }
   };
